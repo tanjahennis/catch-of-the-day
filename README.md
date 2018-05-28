@@ -1,3 +1,1 @@
-# catch-of-the-day
-
-## React Course by Wes Bos
+## Catch of the Day - React Course by Wes Bos
