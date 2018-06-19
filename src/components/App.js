@@ -13,12 +13,15 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log('mountedd')
     const { params } = this.props.match
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: "fishes"
     })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
   }
 
   addFish = fish => {
