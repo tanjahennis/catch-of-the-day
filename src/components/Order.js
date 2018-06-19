@@ -6,14 +6,21 @@ export default class Order extends Component {
     const fish = this.props.fishes[key]
     const count = this.props.order[key]
     const isAvailable = fish && fish.status === 'available'
+    if (!fish) return null
 
     if(!isAvailable) {
-      return <li key={key}>Sorry {fish ? fish.name : 'fish'} is no longer available</li>
+      return (
+        <li key={key}>
+          Sorry {fish ? fish.name : 'fish'} is no longer available
+        </li>
+      )
     }
-    return <li key={key}>
+    return (
+      <li key={key}>
         {count} lbs {fish.name}
         {formatPrice(count * fish.price)}
       </li>
+    )
   }
 
   render () {
