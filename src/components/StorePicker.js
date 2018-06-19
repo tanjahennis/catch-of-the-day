@@ -9,7 +9,7 @@ export default class StorePicker extends Component {
     console.log(this.myInput.value.value)
     console.log('second', this)
 
-    const storeName = this.myInput
+    const storeName = this.myInput.value.value
 
     this.props.history.push(`/store/${storeName}`)
   }

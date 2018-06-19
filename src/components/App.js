@@ -4,11 +4,21 @@ import Order from './Order'
 import Inventory from './Inventory'
 import sampleFishes from '../sample-fishes'
 import Fish from './Fish'
+import base from '../base'
 
 export default class App extends Component {
   state = {
     fishes: {},
     order: {}
+  }
+
+  componentDidMount() {
+    console.log('mountedd')
+    const { params } = this.props.match
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: "fishes"
+    })
   }
 
   addFish = fish => {
