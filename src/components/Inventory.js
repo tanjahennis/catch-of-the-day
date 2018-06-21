@@ -14,6 +14,11 @@ export default class Inventory extends Component {
     loadSampleFishes: PropTypes.func,
   }
 
+  state = {
+    uid: null,
+    owner: null
+  }
+
   authHandler = async authData => {
     const store = await base.fetch(this.props.storeId, { context: this })
     console.log('store', store)
@@ -41,7 +46,16 @@ export default class Inventory extends Component {
   }
 
   render () {
-    return <Login authenticate={this.authenticate} />
+    if (!this.state.uid) {
+      return <Login authenticate={this.authenticate} />
+    }
+
+    if (this.state.uid !== this.state.owner) {
+      return
+      <div>
+        You are not the owner
+      </div>
+    }
 
     return (
       <div className="inventory">
