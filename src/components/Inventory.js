@@ -19,6 +19,14 @@ export default class Inventory extends Component {
     owner: null
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.authHandler({ user })
+      }
+    })
+  }
+
   authHandler = async authData => {
     const store = await base.fetch(this.props.storeId, { context: this })
     console.log('store', store)
@@ -45,21 +53,33 @@ export default class Inventory extends Component {
       .then(this.authHandler)
   }
 
+  logout = async () => {
+    console.log('loggin out')
+    await firebase.auth().signOut()
+
+    this.setState({ uid: null })
+  }
+
   render () {
+    const logout = <button onClick={this.logout}>Log Out</button>
+
     if (!this.state.uid) {
       return <Login authenticate={this.authenticate} />
     }
 
     if (this.state.uid !== this.state.owner) {
-      return
-      <div>
-        You are not the owner
-      </div>
+      return (
+        <div>
+          <p>You are not the owner</p>
+          {logout}
+        </div>
+      )
     }
 
     return (
       <div className="inventory">
         <h2>Inventory</h2>
+        {logout}
         {Object.keys(this.props.fishes).map(key => (
           <EditFishForm
             key={key}
